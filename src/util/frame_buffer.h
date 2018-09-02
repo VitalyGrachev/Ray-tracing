@@ -1,0 +1,8 @@
+#ifndef RAY_TRACING_FRAME_BUFFER_H
+#define RAY_TRACING_FRAME_BUFFER_H
+
+class FrameBuffer {
+
+};
+
+#endif //RAY_TRACING_FRAME_BUFFER_H

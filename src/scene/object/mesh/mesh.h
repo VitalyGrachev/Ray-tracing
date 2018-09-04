@@ -1,14 +1,15 @@
 #ifndef RAY_TRACING_MESH_H
 #define RAY_TRACING_MESH_H
 
-#include <optional>
 #include <vector>
 #include "primitives/triangle.h"
-#include "util/intersection.h"
+#include "../../../util/enumeration.h"
 
 class Mesh {
 public:
-    std::optional<Intersection> find_intersection(const Ray & ray) const;
+    using TriangleIterator = std::vector<Triangle>::const_iterator;
+
+    Enumeration<TriangleIterator> enumerate_triangles() const;
 
 private:
     std::vector<Triangle> triangles_;

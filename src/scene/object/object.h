@@ -5,7 +5,6 @@
 
 class Object {
 public:
-    std::optional<Intersection> find_intersection(const Ray & ray) const;
 private:
     Mesh mesh_;
 };

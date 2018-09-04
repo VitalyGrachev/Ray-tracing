@@ -1,7 +1,7 @@
 #ifndef RAY_TRACING_RAY_H
 #define RAY_TRACING_RAY_H
 
-#include "../../util/vector.h"
+#include "../util/vector.h"
 
 class Ray {
 public:

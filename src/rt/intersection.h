@@ -1,9 +1,9 @@
 #ifndef RAY_TRACING_INTERSECTION_H
 #define RAY_TRACING_INTERSECTION_H
 
-#include "../primitives/triangle.h"
-#include "../../../../util/vector.h"
-#include "../../../camera/ray.h"
+#include "../scene/object/mesh/primitives/triangle.h"
+#include "../util/vector.h"
+#include "ray.h"
 
 class Intersection {
 public:

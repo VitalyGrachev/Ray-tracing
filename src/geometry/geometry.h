@@ -3,6 +3,7 @@
 
 #include <optional>
 #include "intersection.h"
+#include "ray.h"
 
 /**
  * Interface. Represents piece of geometry, which ray can intersect with

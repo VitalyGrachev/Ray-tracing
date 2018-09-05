@@ -2,7 +2,7 @@
 #define RAY_TRACING_TRIANGLE_H
 
 #include <array>
-#include "../../../../util/vector.h"
+#include "../../util/vector.h"
 
 class Triangle {
 public:

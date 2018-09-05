@@ -1,7 +1,7 @@
 #ifndef RAY_TRACING_INTERSECTION_H
 #define RAY_TRACING_INTERSECTION_H
 
-#include "../scene/object/mesh/primitives/triangle.h"
+#include "primitive/triangle.h"
 #include "../util/vector.h"
 #include "ray.h"
 

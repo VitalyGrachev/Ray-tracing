@@ -2,8 +2,8 @@
 #define RAY_TRACING_MESH_H
 
 #include <vector>
-#include "primitives/triangle.h"
-#include "../../../util/enumeration.h"
+#include "../primitive/triangle.h"
+#include "../../util/enumeration.h"
 
 class Mesh {
 public:

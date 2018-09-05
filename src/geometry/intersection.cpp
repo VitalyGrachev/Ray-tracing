@@ -1,5 +1,6 @@
-#include <cmath>
 #include "intersection.h"
+
+#include <cmath>
 
 Intersection::Intersection(const Triangle & triangle,
                            const Vec3 & point,

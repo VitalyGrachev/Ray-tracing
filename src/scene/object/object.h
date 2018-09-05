@@ -2,13 +2,16 @@
 #define RAY_TRACING_OBJECT_H
 
 #include <memory>
-#include "mesh/mesh.h"
 #include "material/material.h"
+#include "../../geometry/geometry.h"
 #include "../../util/transform.h"
 
-class Object {
+/**
+ * Represents single visible object on scene
+ */
+class Object final {
 public:
-    Object(const std::shared_ptr<Mesh> & mesh,
+    Object(const std::shared_ptr<Geometry> & geometry,
            const std::shared_ptr<Material> & material);
 
     Object(const Object & other) = default;
@@ -17,15 +20,26 @@ public:
 
     Object & operator=(const Object & other) = default;
 
+    /**
+     * @return transform, which represent placement of object in world coordinate system
+     */
+    Transform & transform() { return transform_; }
+
     const Transform & transform() const { return transform_; }
 
-    const Mesh & mesh() const { return *mesh_; }
+    /**
+     * @return geometry of object defined in local coordinate system
+     */
+    const Geometry & geometry() const { return *geometry_; }
 
+    /**
+     * @return material object has
+     */
     const Material & material() const { return *material_; }
 
 private:
     Transform transform_;
-    std::shared_ptr<Mesh> mesh_;
+    std::shared_ptr<Geometry> geometry_;
     std::shared_ptr<Material> material_;
 };
 

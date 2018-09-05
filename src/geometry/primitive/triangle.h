@@ -3,12 +3,16 @@
 
 #include <array>
 #include "../../util/vector.h"
+#include "../geometry.h"
 
-class Triangle {
+/**
+ * Represents triangle polygon
+ */
+class Triangle : public Geometry {
 public:
-    using Points = std::array<Vec3, 3>;
+    using Vertices = std::array<Vec3, 3>;
 
-    explicit Triangle(const Points & points);
+    explicit Triangle(const Vertices & points);
 
     Triangle(const Vec3 & p1, const Vec3 & p2, const Vec3 & p3);
 
@@ -18,12 +22,25 @@ public:
 
     Triangle & operator=(const Triangle & other) = default;
 
-    const Points & points() const { return points_; }
+    /**
+     * @return normal to this triangle's surface
+     */
+    Vec3 normal() const;
+
+    /**
+     * @return vertices, which form this triangle
+     */
+    const Vertices & vertices() const { return points_; }
+
+    /**
+     * Finds point, where ray intersects with this triangle
+     * @param ray ray to find intersection with
+     * @return std::optional containing found intersection or empty std::optional if there is no intersection
+     */
+    std::optional<Intersection> find_intersection(const Ray & ray) const override;
 
 private:
-    Points points_;
+    Vertices points_;
 };
-
-Vec3 triangle_normal(const Triangle & tr);
 
 #endif //RAY_TRACING_TRIANGLE_H

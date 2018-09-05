@@ -1,15 +1,16 @@
 #ifndef RAY_TRACING_INTERSECTION_H
 #define RAY_TRACING_INTERSECTION_H
 
-#include "primitive/triangle.h"
 #include "../util/vector.h"
-#include "ray.h"
 
-class Intersection {
+/**
+ * Represents intersection point of ray and geometry
+ */
+class Intersection final {
 public:
-    static std::optional<Intersection> find(const Triangle & triangle, const Ray & ray);
-
-    Intersection(const Triangle & triangle, const Vec3 & point, const Vec3 & normal);
+    Intersection(const Vec3 & point,
+                 const Vec3 & normal,
+                 const Vec2 & uv);
 
     Intersection(const Intersection &) = default;
 
@@ -17,16 +18,25 @@ public:
 
     Intersection & operator=(const Intersection &) = default;
 
+    /**
+     * @return point, where intersection occurs
+     */
     const Vec3 & point() const { return point_; }
 
+    /**
+     * @return normal to geometry surface at intersection point
+     */
     const Vec3 & normal() const { return normal_; }
 
-    const Triangle & triangle() const { return *triangle_; }
+    /**
+     * @return texture coordinates at intersection point
+     */
+    const Vec2 & tex_coords() const { return tex_coords_; }
 
 private:
-    const Triangle * triangle_;
     Vec3 point_;
     Vec3 normal_;
+    Vec2 tex_coords_;
 };
 
 #endif //RAY_TRACING_INTERSECTION_H

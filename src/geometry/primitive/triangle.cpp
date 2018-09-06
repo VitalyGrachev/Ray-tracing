@@ -20,11 +20,11 @@ std::optional<Intersection> Triangle::find_intersection(const Ray & ray) const {
     const Vec3 & A = this->vertices()[0];
     const Vec3 & B = this->vertices()[1];
     const Vec3 & C = this->vertices()[2];
-    const float ray_length = -QVector3D::dotProduct(normal, ray.start_point() + A) / cos;
+    const float ray_length = -QVector3D::dotProduct(normal, ray.origin() + A) / cos;
 
     if (ray_length < 0) { return {}; }
 
-    const Vec3 P = ray.start_point() + ray_length * ray.direction();
+    const Vec3 P = ray.origin() + ray_length * ray.direction();
 
     const Vec3 AB = B - A;
     const Vec3 AC = C - A;

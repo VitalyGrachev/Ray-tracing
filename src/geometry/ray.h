@@ -3,6 +3,9 @@
 
 #include "../util/vector.h"
 
+/**
+ * Represents a ray emitted from origin in given direction
+ */
 class Ray {
 public:
     Ray(const Vec3 & start, const Vec3 & direction);
@@ -13,12 +16,18 @@ public:
 
     Ray & operator=(const Ray &) = default;
 
-    const Vec3 & start_point() const;
+    /**
+     * @return start point of the ray
+     */
+    const Vec3 & origin() const;
 
+    /**
+     * @return direction the ray is emitted in
+     */
     const Vec3 & direction() const;
 
 private:
-    Vec3 start_;
+    Vec3 origin_;
     Vec3 direction_;
 };
 

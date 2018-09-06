@@ -26,6 +26,18 @@ public:
      */
     const Vec3 & direction() const;
 
+    /**
+     * Sets new origin for the ray
+     * @param origin new origin
+     */
+    void set_origin(const Vec3 & origin);
+
+    /**
+     * Sets new direction for the ray
+     * @param direction new direction
+     */
+    void set_direction(const Vec3 & direction);
+
 private:
     Vec3 origin_;
     Vec3 direction_;

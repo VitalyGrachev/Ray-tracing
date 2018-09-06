@@ -7,10 +7,9 @@ class Camera final {
 public:
     /**
      * Creates camera with default transform and field of view.
-     * Default transform sets camera into the origin of world coordinate system with camera looking along X axis.
      * Default field of view is 1 radian for horizontal and vertical fields of view.
      */
-    Camera();
+    explicit Camera(const Transform & transform = Transform());
 
     Camera(const Camera & other) = default;
 
@@ -19,7 +18,8 @@ public:
     Camera & operator=(const Camera & other) = default;
 
     /**
-     * Returns transform, which represent placement of camera in world coordinate system
+     * Returns transform, which represent placement of camera in world coordinate system.
+     * Camera looks in forward direction.
      * @return transform of the camera
      */
     Transform & transform() { return transform_; }

@@ -9,7 +9,7 @@
 /**
  * Piece of geometry that emit light
  */
-class LightSource {
+class LightSource final {
 public:
     /**
      * Type of light source

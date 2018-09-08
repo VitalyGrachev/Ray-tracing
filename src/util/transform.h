@@ -2,6 +2,7 @@
 #define RAY_TRACING_TRANSFORM_H
 
 #include "vector.h"
+#include "matrix.h"
 
 /**
  * Describes elements position, rotation and scale in world coordinate system
@@ -18,11 +19,11 @@ public:
      */
     Transform();
 
-    Transform(const Transform & other);
+    Transform(const Transform & other) = default;
 
-    ~Transform();
+    ~Transform() = default;
 
-    Transform & operator=(const Transform & other);
+    Transform & operator=(const Transform & other) = default;
 
     /**
      * Adds to the transform translation by the components of vector
@@ -87,6 +88,12 @@ public:
      * @return transformed vector
      */
     Vec3 unapply(const Vec3 & vector) const;
+
+private:
+    void recalculate_backward_transform();
+
+    Mat4 forward_transform_matrix_;
+    Mat4 backward_transform_matrix_;
 };
 
 #endif //RAY_TRACING_TRANSFORM_H

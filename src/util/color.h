@@ -95,7 +95,13 @@ Color operator*(const Color & lhs, const Color & rhs) {
     return result;
 }
 
-Color operator*(const Color & color, const Vec3 & vector) {
+Color operator*(const Vec3 & vector, const Color & color) {
+    Color result(color);
+    result *= vector;
+    return result;
+}
+
+Color operator*(const Vec3 & vector, const Color & color) {
     Color result(color);
     result *= vector;
     return result;

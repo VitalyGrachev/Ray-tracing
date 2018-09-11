@@ -42,9 +42,9 @@ public:
      * Returns camera associated with the scene
      * @return camera associated with the scene
      */
-    Camera & get_camera();
+    Camera & get_camera() { return camera_; }
 
-    const Camera & get_camera() const;
+    const Camera & get_camera() const { return camera_; }
 
     /**
      * Finds closest to ray origin intersection of ray and scene's object or light source

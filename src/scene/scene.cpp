@@ -29,6 +29,14 @@ Enumeration<Scene::ConstLightSourcesIterator> Scene::enumerate_light_sources() c
     return Enumeration<Scene::ConstLightSourcesIterator>(light_sources_.cbegin(), light_sources_.cend());
 }
 
+void Scene::add_object(const Object & object) {
+    objects_.push_back(object);
+}
+
+void Scene::add_light_source(const LightSource & light_source) {
+    light_sources_.push_back(light_source);
+}
+
 void Scene::swap(Scene & other) {
     if (this == &other) { return; }
 

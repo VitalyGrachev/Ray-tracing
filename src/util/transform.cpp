@@ -4,6 +4,7 @@ namespace {
 
 constexpr float pi = 3.14159265358979323846f;
 
+constexpr Vec3 zero = Vec3(0.0f, 0.0f, 0.0f);
 constexpr Vec3 local_forward = Vec3(1.0f, 0.0f, 0.0f);
 constexpr Vec3 local_left = Vec3(0.0f, 1.0f, 0.0f);
 constexpr Vec3 local_up = Vec3(0.0f, 0.0f, 1.0f);
@@ -70,4 +71,12 @@ Vec3 Transform::untransform_point(const Vec3 & point) const {
 
 void Transform::recalculate_backward_transform() {
     backward_transform_matrix_ = forward_transform_matrix_.inverted();
+}
+
+Vec3 Transform::transform_direction(const Vec3 & direction) const {
+    return (transform_point(direction) - transform_point(zero)).normalized();
+}
+
+Vec3 Transform::untransform_direction(const Vec3 & direction) const {
+    return (untransform_point(direction) - untransform_point(zero)).normalized();
 }

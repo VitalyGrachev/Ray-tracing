@@ -89,6 +89,20 @@ public:
      */
     Vec3 untransform_point(const Vec3 & point) const;
 
+    /**
+     * Applies the transform to direction
+     * @param direction direction to apply transform to
+     * @return transformed direction
+     */
+    Vec3 transform_direction(const Vec3 & direction) const;
+
+    /**
+     * Applies backward the transform to direction
+     * @param direction direction to apply backward transform to
+     * @return transformed direction
+     */
+    Vec3 untransform_direction(const Vec3 & direction) const;
+
 private:
     void recalculate_backward_transform();
 

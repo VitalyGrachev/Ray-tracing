@@ -13,6 +13,22 @@ Scene & Scene::operator=(Scene && other) {
     return *this;
 }
 
+Enumeration<Scene::ObjectsIterator> Scene::enumerate_objects() {
+    return Enumeration<Scene::ObjectsIterator>(objects_.begin(), objects_.end());
+}
+
+Enumeration<Scene::ConstObjectsIterator> Scene::enumerate_objects() const {
+    return Enumeration<Scene::ConstObjectsIterator>(objects_.cbegin(), objects_.cend());
+}
+
+Enumeration<Scene::LightSourcesIterator> Scene::enumerate_light_sources() {
+    return Enumeration<Scene::LightSourcesIterator>(light_sources_.begin(), light_sources_.end());
+}
+
+Enumeration<Scene::ConstLightSourcesIterator> Scene::enumerate_light_sources() const {
+    return Enumeration<Scene::ConstLightSourcesIterator>(light_sources_.cbegin(), light_sources_.cend());
+}
+
 void Scene::swap(Scene & other) {
     if (this == &other) { return; }
 

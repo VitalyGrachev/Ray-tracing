@@ -1,5 +1,8 @@
 #include "scene.h"
 
+Scene::Scene(const Camera & camera)
+        : camera_(camera) {}
+
 Scene::Scene(Scene && other)
         : objects_(std::move(other.objects_)),
           light_sources_(std::move(other.light_sources_)),

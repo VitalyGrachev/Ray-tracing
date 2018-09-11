@@ -1,5 +1,15 @@
 #include "scene.h"
 
+Scene::Scene(Scene && other)
+        : objects_(std::move(other.objects_)),
+          light_sources_(std::move(other.light_sources_)),
+          camera_(other.camera_) {}
+
+Scene & Scene::operator=(Scene && other) {
+    swap(other);
+    return *this;
+}
+
 void Scene::swap(Scene & other) {
     if (this == &other) { return; }
 

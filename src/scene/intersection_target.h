@@ -7,8 +7,8 @@
 #include "../geometry/intersection.h"
 
 struct IntersectionTarget {
-    using ObjectTarget = Object *;
-    using LightSourceTarget = LightSource *;
+    using ObjectTarget = const Object *;
+    using LightSourceTarget = const LightSource *;
 
     Intersection intersection;
     std::variant<ObjectTarget, LightSourceTarget> target;

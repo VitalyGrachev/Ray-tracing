@@ -49,23 +49,23 @@ Transform & Transform::scale(float factor) {
 }
 
 Vec3 Transform::forward() const {
-    return apply(local_forward);
+    return transform_point(local_forward);
 }
 
 Vec3 Transform::left() const {
-    return apply(local_left);
+    return transform_point(local_left);
 }
 
 Vec3 Transform::up() const {
-    return apply(local_up);
+    return transform_point(local_up);
 }
 
-Vec3 Transform::apply(const Vec3 & vector) const {
-    return forward_transform_matrix_ * vector;
+Vec3 Transform::transform_point(const Vec3 & point) const {
+    return forward_transform_matrix_ * point;
 }
 
-Vec3 Transform::unapply(const Vec3 & vector) const {
-    return backward_transform_matrix_ * vector;
+Vec3 Transform::untransform_point(const Vec3 & point) const {
+    return backward_transform_matrix_ * point;
 }
 
 void Transform::recalculate_backward_transform() {

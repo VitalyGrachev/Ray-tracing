@@ -76,18 +76,18 @@ public:
     Vec3 up() const;
 
     /**
-     * Applies the transform to vector vector
-     * @param vector vector to apply transform to
-     * @return transformed vector
+     * Applies the transform to point
+     * @param point point to apply transform to
+     * @return transformed point
      */
-    Vec3 apply(const Vec3 & vector) const;
+    Vec3 transform_point(const Vec3 & point) const;
 
     /**
-     * Applies backward transform to vector
-     * @param vector vector to apply backward transform to
-     * @return transformed vector
+     * Applies backward transform to point
+     * @param point point to apply backward transform to
+     * @return transformed point
      */
-    Vec3 unapply(const Vec3 & vector) const;
+    Vec3 untransform_point(const Vec3 & point) const;
 
 private:
     void recalculate_backward_transform();

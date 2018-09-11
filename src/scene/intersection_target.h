@@ -12,6 +12,12 @@ struct IntersectionTarget {
 
     Intersection intersection;
     std::variant<ObjectTarget, LightSourceTarget> target;
+
+    IntersectionTarget(const Intersection & intersection, ObjectTarget target)
+            : intersection(intersection), target(target) {}
+
+    IntersectionTarget(const Intersection & intersection, LightSourceTarget target)
+            : intersection(intersection), target(target) {}
 };
 
 #endif //RAY_TRACING_INTERSECTION_TARGET_H

@@ -56,21 +56,21 @@ public:
 
     /**
      * Returns forward direction.
-     * Same as transform_direction(Vec3(1, 0, 0)
+     * Same as transform_direction(Vec3(1, 0, 0))
      * @return forward direction
      */
     Vec3 forward() const;
 
     /**
      * Returns left direction.
-     * Same as transform_direction(Vec3(0, 1, 0)
+     * Same as transform_direction(Vec3(0, 1, 0))
      * @return left direction
      */
     Vec3 left() const;
 
     /**
      * Returns up direction.
-     * Same as transform_direction(Vec3(0, 0, 1)
+     * Same as transform_direction(Vec3(0, 0, 1))
      * @return up direction
      */
     Vec3 up() const;

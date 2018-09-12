@@ -49,6 +49,10 @@ Transform & Transform::scale(float factor) {
     return *this;
 }
 
+Vec3 Transform::origin() const {
+    return transform_point(zero);
+}
+
 Vec3 Transform::forward() const {
     return transform_direction(local_forward);
 }

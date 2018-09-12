@@ -55,6 +55,13 @@ public:
     Transform & scale(float factor);
 
     /**
+     * Returns origin of transformed coordinate system.
+     * Same as transform_point(Vec3(0, 0, 0))
+     * @return
+     */
+    Vec3 origin() const;
+
+    /**
      * Returns forward direction.
      * Same as transform_direction(Vec3(1, 0, 0))
      * @return forward direction

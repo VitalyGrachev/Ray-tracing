@@ -1,5 +1,61 @@
 #include "scene.h"
 
+namespace {
+
+class ClosestTargetSeeker final {
+public:
+    explicit ClosestTargetSeeker(const Ray & ray) : ray_(ray) {}
+
+    ClosestTargetSeeker & operator=(const ClosestTargetSeeker & other) = delete;
+
+    ~ClosestTargetSeeker() = default;
+
+    ClosestTargetSeeker(const ClosestTargetSeeker & other) = delete;
+
+    template<class Target>
+    void consume_target(const Target & target);
+
+    std::optional<IntersectionTarget> closest_target() const { return closest_target_; }
+
+private:
+    std::optional<Intersection> find_intersection_with(const Transform & transform,
+                                                       const Geometry & geometry) const;
+
+    std::optional<IntersectionTarget> closest_target_;
+    Ray ray_;
+    float distance_to_closest_target_;
+};
+
+template<class Target>
+void ClosestTargetSeeker::consume_target(const Target & target) {
+    auto maybe_intersection = find_intersection_with(target.transform(), target.geometry());
+    if (maybe_intersection.has_value()) {
+        const float distance_to_target = ray_.origin().distanceToPoint(maybe_intersection->point());
+        if (distance_to_target < distance_to_closest_target_ ||
+            !closest_target_.has_value()) {
+            distance_to_closest_target_ = distance_to_target;
+            closest_target_.emplace(*maybe_intersection, &target);
+        }
+    }
+}
+
+std::optional<Intersection> ClosestTargetSeeker::find_intersection_with(const Transform & transform,
+                                                                        const Geometry & geometry) const {
+    // Transform ray into model coordinates since geometry defined in it.
+    Ray model_ray(transform.untransform_point(ray_.origin()),
+                  transform.untransform_direction(ray_.direction()));
+    auto maybe_intersection = geometry.find_intersection(model_ray);
+
+    if (!maybe_intersection.has_value()) { return std::nullopt; }
+
+    // Transform resulting intersection into world coordinates
+    return std::make_optional<Intersection>(transform.transform_point(maybe_intersection->point()),
+                                            transform.transform_direction(maybe_intersection->normal()),
+                                            maybe_intersection->tex_coords());
+}
+
+}
+
 Scene::Scene(const Camera & camera)
         : camera_(camera) {}
 
@@ -14,35 +70,17 @@ Scene & Scene::operator=(Scene && other) {
 }
 
 std::optional<IntersectionTarget> Scene::find_intersection(const Ray & ray) const {
-    std::optional<IntersectionTarget> closest_target(std::nullopt);
-    float distance_to_closest_target = 0.0f;
-
-    auto closest_intersection_or_nothing = [&](const Geometry & geometry) -> std::optional<Intersection> {
-        auto intersection = geometry.find_intersection(ray);
-        if (intersection.has_value()) {
-            const float distance_to_target = ray.origin().distanceToPoint(intersection->point());
-            if (distance_to_target < distance_to_closest_target ||
-                !closest_target.has_value()) {
-                distance_to_closest_target = distance_to_target;
-                return intersection;
-            }
-        }
-        return {};
-    };
+    ClosestTargetSeeker target_seeker(ray);
 
     for (const LightSource & source : light_sources_) {
-        if (auto intersection = closest_intersection_or_nothing(source.geometry())) {
-            closest_target.emplace(*intersection, &source);
-        }
+        target_seeker.consume_target(source);
     }
 
     for (const Object & object : objects_) {
-        if (auto intersection = closest_intersection_or_nothing(object.geometry())) {
-            closest_target.emplace(*intersection, &object);
-        }
+        target_seeker.consume_target(object);
     }
 
-    return closest_target;
+    return target_seeker.closest_target();
 }
 
 Enumeration<Scene::ObjectsIterator> Scene::enumerate_objects() {

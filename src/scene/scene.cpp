@@ -18,8 +18,7 @@ public:
     std::optional<IntersectionTarget> closest_target() const { return closest_target_; }
 
 private:
-    std::optional<Intersection> find_intersection_with(const Transform & transform,
-                                                       const Geometry & geometry) const;
+    std::optional<Intersection> find_intersection_with(const Transform & transform, const Geometry & geometry) const;
 
     std::optional<IntersectionTarget> closest_target_;
     Ray ray_;

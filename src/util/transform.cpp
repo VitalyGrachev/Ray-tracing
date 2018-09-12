@@ -50,15 +50,15 @@ Transform & Transform::scale(float factor) {
 }
 
 Vec3 Transform::forward() const {
-    return transform_point(local_forward);
+    return transform_direction(local_forward);
 }
 
 Vec3 Transform::left() const {
-    return transform_point(local_left);
+    return transform_direction(local_left);
 }
 
 Vec3 Transform::up() const {
-    return transform_point(local_up);
+    return transform_direction(local_up);
 }
 
 Vec3 Transform::transform_point(const Vec3 & point) const {

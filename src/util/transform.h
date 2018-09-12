@@ -55,23 +55,23 @@ public:
     Transform & scale(float factor);
 
     /**
-     * Returns forward-facing vector.
-     * Same as map_to_world(Vec3(1, 0, 0)
-     * @return forward-facing vector
+     * Returns forward direction.
+     * Same as transform_direction(Vec3(1, 0, 0)
+     * @return forward direction
      */
     Vec3 forward() const;
 
     /**
-     * Returns lift-facing vector.
-     * Same as map_to_world(Vec3(0, 1, 0)
-     * @return lift-facing vector
+     * Returns left direction.
+     * Same as transform_direction(Vec3(0, 1, 0)
+     * @return left direction
      */
     Vec3 left() const;
 
     /**
-     * Returns up-facing vector.
-     * Same as map_to_world(Vec3(0, 0, 1)
-     * @return up-facing vector
+     * Returns up direction.
+     * Same as transform_direction(Vec3(0, 0, 1)
+     * @return up direction
      */
     Vec3 up() const;
 

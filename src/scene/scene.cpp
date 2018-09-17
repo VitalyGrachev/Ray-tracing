@@ -4,7 +4,9 @@ namespace {
 
 class ClosestTargetSeeker final {
 public:
-    explicit ClosestTargetSeeker(const Ray & ray) : ray_(ray) {}
+    explicit ClosestTargetSeeker(const Ray & ray, float max_distance)
+            : ray_(ray),
+              distance_to_closest_target_(max_distance) {}
 
     ClosestTargetSeeker & operator=(const ClosestTargetSeeker & other) = delete;
 
@@ -12,8 +14,7 @@ public:
 
     ClosestTargetSeeker(const ClosestTargetSeeker & other) = delete;
 
-    template<class Target>
-    void consume_target(const Target & target);
+    void consume_target(const Object & target);
 
     std::optional<IntersectionTarget> closest_target() const { return closest_target_; }
 
@@ -25,15 +26,13 @@ private:
     float distance_to_closest_target_;
 };
 
-template<class Target>
-void ClosestTargetSeeker::consume_target(const Target & target) {
+void ClosestTargetSeeker::consume_target(const Object & target) {
     auto maybe_intersection = find_intersection_with(target.transform(), target.geometry());
     if (maybe_intersection.has_value()) {
         const float distance_to_target = ray_.origin().distanceToPoint(maybe_intersection->point());
-        if (distance_to_target < distance_to_closest_target_ ||
-            !closest_target_.has_value()) {
+        if (distance_to_target < distance_to_closest_target_) {
             distance_to_closest_target_ = distance_to_target;
-            closest_target_.emplace(*maybe_intersection, &target);
+            closest_target_.emplace(*maybe_intersection, target);
         }
     }
 }
@@ -47,7 +46,7 @@ std::optional<Intersection> ClosestTargetSeeker::find_intersection_with(const Tr
 
     if (!maybe_intersection.has_value()) { return std::nullopt; }
 
-    // Transform resulting intersection into world coordinates
+    // Transform resulting intersection_ into world coordinates
     return std::make_optional<Intersection>(transform.transform_point(maybe_intersection->point()),
                                             transform.transform_direction(maybe_intersection->normal()),
                                             maybe_intersection->tex_coords());
@@ -68,12 +67,8 @@ Scene & Scene::operator=(Scene && other) {
     return *this;
 }
 
-std::optional<IntersectionTarget> Scene::find_intersection(const Ray & ray) const {
-    ClosestTargetSeeker target_seeker(ray);
-
-    for (const LightSource & source : light_sources_) {
-        target_seeker.consume_target(source);
-    }
+std::optional<IntersectionTarget> Scene::find_intersection(const Ray & ray, float max_distance) const {
+    ClosestTargetSeeker target_seeker(ray, max_distance);
 
     for (const Object & object : objects_) {
         target_seeker.consume_target(object);

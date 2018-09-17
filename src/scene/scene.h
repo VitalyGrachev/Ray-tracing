@@ -49,9 +49,11 @@ public:
     /**
      * Finds closest to ray origin intersection of ray and scene's object or light source
      * @param ray ray to find intersection with
+     * @param max_distance maximum distance from origin to serch for intersections
      * @return std::optional containing found intersection or empty std::optional if there is no intersection
      */
-    std::optional<IntersectionTarget> find_intersection(const Ray & ray) const;
+    std::optional<IntersectionTarget>
+    find_intersection(const Ray & ray, float max_distance = std::numeric_limits<float>::infinity()) const;
 
     /**
      * Returns enumeration of objects contained by the scene

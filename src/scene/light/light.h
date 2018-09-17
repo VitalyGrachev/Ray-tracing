@@ -1,6 +1,7 @@
 #ifndef RAY_TRACING_LIGHT_H
 #define RAY_TRACING_LIGHT_H
 
+#include <functional>
 #include "../../util/color.h"
 
 /**
@@ -13,7 +14,14 @@ public:
      * @param color light's color
      * @param intensity light's intensity, clamped between 0 and 1
      */
-    Light(const Color & color, float intensity);
+
+    /**
+     * Creates light with given color and attenuation function
+     * @param color light color
+     * @param attenuation light attenuation callable
+     */
+    template<class AttF>
+    Light(const Color & color, AttF && attenuation);
 
     Light(const Light & other) = default;
 
@@ -28,14 +36,19 @@ public:
     const Color & color() const { return color_; }
 
     /**
-     * Returns light intensity in interval [0, 1].
-     * @return light intensity
+     *
+     * @param distance
+     * @return
      */
-    float intensity() const { return intensity_; }
+    Vec3 attenuation(float distance) const { return attenuation_(distance); }
 
 private:
     Color color_;
-    float intensity_;
+    std::function<Vec3(float)> attenuation_;
 };
+
+template<class AttF>
+Light::Light(const Color & color, AttF && attenuation)
+        : color_(color), attenuation_(attenuation) {}
 
 #endif //RAY_TRACING_LIGHT_H

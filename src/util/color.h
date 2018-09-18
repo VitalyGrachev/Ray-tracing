@@ -101,12 +101,6 @@ Color operator*(const Vec3 & vector, const Color & color) {
     return result;
 }
 
-Color operator*(const Vec3 & vector, const Color & color) {
-    Color result(color);
-    result *= vector;
-    return result;
-}
-
 Color operator*(const Color & color, float factor) {
     Color result(color);
     result *= factor;

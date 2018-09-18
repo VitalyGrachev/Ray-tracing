@@ -11,11 +11,15 @@
 class BRDFunction {
 public:
     template<class F>
-    BRDFunction(F && f);
+    explicit BRDFunction(F && f);
+
+    BRDFunction(const BRDFunction & other) = default;
 
     BRDFunction(BRDFunction && other) = default;
 
     ~BRDFunction() = default;
+
+    BRDFunction & operator=(const BRDFunction & other) = default;
 
     BRDFunction & operator=(BRDFunction && other) = default;
 

@@ -19,12 +19,12 @@ public:
     /**
      * @return start point of the ray
      */
-    const Vec3 & origin() const;
+    const Vec3 & origin() const { return origin_; }
 
     /**
      * @return direction the ray is emitted in
      */
-    const Vec3 & direction() const;
+    const Vec3 & direction() const { return direction_; }
 
     /**
      * Sets new origin for the ray

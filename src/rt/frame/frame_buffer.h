@@ -2,7 +2,7 @@
 #define RAY_TRACING_FRAME_BUFFER_H
 
 #include <vector>
-#include "../util/color.h"
+#include "../../util/color.h"
 
 class FrameBuffer {
 public:

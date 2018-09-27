@@ -30,6 +30,8 @@ public:
 
     const Size & size() const { return size_; }
 
+    const bool is_position_valid(Position pos) const;
+
     Color & color_at(Position pos) { return fragment_colors_[index(pos)]; }
 
     const Color & color_at(Position pos) const { return fragment_colors_[index(pos)]; }
@@ -43,6 +45,10 @@ private:
 
 inline size_t FrameBuffer::index(Position pos) const {
     return pos.row * size_.cols + pos.col;;
+}
+
+inline const bool FrameBuffer::is_position_valid(Position pos) const {
+    return pos.row < size_.rows && pos.col < size_.cols;
 }
 
 #endif //RAY_TRACING_FRAME_BUFFER_H

@@ -2,9 +2,9 @@
 #define RAY_TRACING_BASE_RAY_TRACE_TASK_H
 
 #include "ray_trace_task.h"
-#include "../frame/fragment.h"
-#include "../../util/color.h"
-#include "../../scene/scene.h"
+#include "../../frame/fragment.h"
+#include "../../../util/color.h"
+#include "../../../scene/scene.h"
 
 class BaseRayTraceTask : public RayTraceTask {
 public:

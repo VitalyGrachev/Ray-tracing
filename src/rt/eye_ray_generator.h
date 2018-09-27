@@ -15,7 +15,7 @@ public:
         std::reference_wrapper<Color> acceptor_fragment;
     };
 
-    EyeRayGenerator(const FrameBuffer & frame_buffer, const Camera & camera);
+    EyeRayGenerator(FrameBuffer & frame_buffer, const Camera & camera);
 
     EyeRayGenerator(const EyeRayGenerator & other) = delete;
 
@@ -32,8 +32,8 @@ private:
 
     std::optional<FrameBuffer::Position> next_fragment_position();
 
-    FrameBuffer frame_buffer_;
     FrameBuffer::Position next_fragment_pos_;
+    FrameBuffer & frame_buffer_;
     const Camera & camera_;
 };
 

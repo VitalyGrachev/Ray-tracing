@@ -2,7 +2,10 @@
 #define RAY_TRACING_RAY_TRACER_H
 
 #include <memory>
-#include "../ray-trace-task/ray_trace_task.h"
+
+class RayTraceTask;
+
+#include "ray-trace-task/ray_trace_task.h"
 
 class RayTracer {
 public:

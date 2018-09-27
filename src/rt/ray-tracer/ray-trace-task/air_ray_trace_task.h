@@ -2,7 +2,7 @@
 #define RAY_TRACING_AIR_RAY_TRACE_TASK_H
 
 #include "base_ray_trace_task.h"
-#include "../ray-tracer/ray_tracer.h"
+#include "../ray_tracer.h"
 
 class AirRayTraceTask : public BaseRayTraceTask {
 public:

@@ -39,8 +39,8 @@ void AirRayTraceTask::emit_shadow_rays(const Intersection & intersection,
                                        const BRDFunction & surface_brdf,
                                        RayTracer & ray_tracer) {
     const Vec3 & surface_normal = intersection.normal();
-    for (const LightSource & light_source : scene().enumerate_light_sources()) {
-        const Illuminance illuminance = light_source.illuminate_point(intersection.point());
+    for (const auto & light_source : scene().enumerate_light_sources()) {
+        const Illuminance illuminance = light_source->illuminate_point(intersection.point());
         ray_tracer.trace_ray(std::make_unique<ShadowRayTraceTask>(*this,
                                                                   illuminance,
                                                                   std::bind(surface_brdf,

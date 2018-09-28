@@ -14,7 +14,7 @@ public:
     using ObjectsIterator = std::vector<Object>::iterator;
     using ConstObjectsIterator = std::vector<Object>::const_iterator;
     using LightSourcesIterator = std::vector<LightSource>::iterator;
-    using ConstLightSourcesIterator = std::vector<LightSource>::const_iterator;
+    using ConstLightSourcesIterator = std::vector<std::unique_ptr<LightSource>>::const_iterator;
 
     /**
      * Creates empty scene and associates the given camera with it
@@ -81,11 +81,11 @@ public:
      * Adds new light source to the scene
      * @param light source light source to add
      */
-    void add_light_source(const LightSource & light_source);
+    void add_light_source(std::unique_ptr<LightSource> && light_source);
 
 private:
     std::vector<Object> objects_;
-    std::vector<LightSource> light_sources_;
+    std::vector<std::unique_ptr<LightSource>> light_sources_;
     Camera camera_;
 };
 

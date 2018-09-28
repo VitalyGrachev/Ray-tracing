@@ -97,8 +97,8 @@ void Scene::add_object(const Object & object) {
     objects_.push_back(object);
 }
 
-void Scene::add_light_source(const LightSource & light_source) {
-    light_sources_.push_back(light_source);
+void Scene::add_light_source(std::unique_ptr<LightSource> && light_source) {
+    light_sources_.push_back(std::move(light_source));
 }
 
 void Scene::swap(Scene & other) {

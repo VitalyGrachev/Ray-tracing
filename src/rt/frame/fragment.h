@@ -9,14 +9,12 @@ public:
 
     virtual ~Fragment() = default;
 
-    virtual void add_color(const Color & color);
+    virtual void add_color(const Color & color) {
+        fragment_color_ += color;
+    }
 
 private:
     Color & fragment_color_;
 };
-
-void Fragment::add_color(const Color & color) {
-    fragment_color_ += color;
-}
 
 #endif //RAY_TRACING_FRAGMENT_H

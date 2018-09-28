@@ -5,6 +5,9 @@
 
 class SolidMaterial final : public PBRMaterial {
 public:
+    SolidMaterial(const Color & diffuse_color, const Color & base_reflectivity, float roughness)
+            : base_reflectivity_(base_reflectivity), diffuse_color_(diffuse_color), roughness_(roughness) {}
+
     ~SolidMaterial() = default;
 
 private:

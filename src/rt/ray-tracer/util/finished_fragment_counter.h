@@ -29,11 +29,4 @@ inline bool FinishedFragmentCounter::is_render_finished() const {
     return !pending_fragments_;
 }
 
-void FinishedFragmentCounter::fragment_finished() {
-    const unsigned fragments_left = --pending_fragments_;
-    if (!fragments_left) {
-        on_all_finished_();
-    }
-}
-
 #endif //RAY_TRACING_FINISHED_FRAGMENT_COUNTER_H

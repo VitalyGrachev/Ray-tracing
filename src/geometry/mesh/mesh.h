@@ -9,6 +9,10 @@ class Mesh : public Geometry {
 public:
     using TriangleIterator = std::vector<Triangle>::const_iterator;
 
+    explicit Mesh(const std::vector<Triangle> & triangles);
+
+    explicit Mesh(std::vector<Triangle> && triangles);
+
     Enumeration<TriangleIterator> enumerate_triangles() const;
 
     std::optional<Intersection> find_intersection(const Ray & ray) const override;

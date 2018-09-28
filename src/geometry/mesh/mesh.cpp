@@ -1,5 +1,9 @@
 #include "mesh.h"
 
+Mesh::Mesh(const std::vector<Triangle> & triangles) : triangles_(triangles) {}
+
+Mesh::Mesh(std::vector<Triangle> && triangles) : triangles_(std::move(triangles)) {}
+
 Enumeration<Mesh::TriangleIterator> Mesh::enumerate_triangles() const {
     return Enumeration<Mesh::TriangleIterator>{triangles_.cbegin(), triangles_.cend()};
 }

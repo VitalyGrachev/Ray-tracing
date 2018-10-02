@@ -9,7 +9,7 @@ public:
 
     ShadowRayTraceTask(const BaseRayTraceTask & parent, const Illuminance & illuminance, const BRDF & surface_brdf);
 
-    void operator()() override;
+    void operator()(RayTracer & ray_tracer) override;
 
 private:
     BRDF surface_brdf_;

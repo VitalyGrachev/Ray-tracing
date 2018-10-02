@@ -9,10 +9,9 @@
 class Sphere : public Geometry {
 public:
     /**
-     * Creates new sphere with given radius
-     * @param radius
+     * Creates new sphere with radius 1
      */
-    explicit Sphere(float radius);
+    Sphere() = default;
 
     Sphere(const Sphere & other) = default;
 
@@ -32,7 +31,7 @@ private:
 
     Vec2 tex_coords(const Vec3 & point) const;
 
-    float radius_;
+    static const float radius_;
 };
 
 #endif //RAY_TRACING_SPHERE_H

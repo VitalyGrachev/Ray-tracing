@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Sphere::Sphere(float radius) : radius_(radius) {}
+const float Sphere::radius_ = 1.0f;
 
 std::optional<Intersection> Sphere::find_intersection(const Ray & ray) const {
     // (d * d)t^2 + 2(d * o)t + (o * o) - r^2 = 0

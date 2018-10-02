@@ -73,14 +73,14 @@ Vec3 Transform::untransform_point(const Vec3 & point) const {
     return backward_transform_matrix_.map(point);
 }
 
-void Transform::recalculate_backward_transform() {
-    backward_transform_matrix_ = forward_transform_matrix_.inverted();
-}
-
 Vec3 Transform::transform_direction(const Vec3 & direction) const {
     return forward_transform_matrix_.mapVector(direction);
 }
 
 Vec3 Transform::untransform_direction(const Vec3 & direction) const {
     return backward_transform_matrix_.mapVector(direction);
+}
+
+void Transform::recalculate_backward_transform() {
+    backward_transform_matrix_ = forward_transform_matrix_.inverted();
 }

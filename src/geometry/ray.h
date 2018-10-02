@@ -43,4 +43,9 @@ private:
     Vec3 direction_;
 };
 
+inline std::ostream & operator<<(std::ostream & os, const Ray & r) {
+    os << "origin: " << r.origin() << " direction: " << r.direction();
+    return os;
+}
+
 #endif //RAY_TRACING_RAY_H

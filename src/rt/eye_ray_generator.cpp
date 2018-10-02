@@ -16,7 +16,7 @@ std::optional<EyeRayGenerator::EyeRay> EyeRayGenerator::next_eye_ray() {
 
     Color & fragment = frame_buffer_.color_at(*fragment_position);
     const Ray ray = fragment_ray(fragment_angles(*fragment_position));
-    return std::make_optional<EyeRay>(ray, fragment);
+    return std::make_optional<EyeRay>({ray, fragment});
 }
 
 Ray EyeRayGenerator::fragment_ray(const Vec2 & angles) const {
@@ -30,8 +30,8 @@ Ray EyeRayGenerator::fragment_ray(const Vec2 & angles) const {
 
 Vec2 EyeRayGenerator::fragment_angles(FrameBuffer::Position fragment_pos) const {
     const FrameBuffer::Size & size = frame_buffer_.size();
-    return camera_.field_of_view() * Vec2((0.5f + fragment_pos.col) / size.cols - 0.5f,
-                                          (0.5f + fragment_pos.row) / size.rows - 0.5f);
+    return camera_.field_of_view() * Vec2(0.5f - (0.5f + fragment_pos.col) / size.cols,
+                                          0.5f - (0.5f + fragment_pos.row) / size.rows);
 }
 
 std::optional<FrameBuffer::Position> EyeRayGenerator::next_fragment_position() {

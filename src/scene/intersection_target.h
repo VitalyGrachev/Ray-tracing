@@ -7,7 +7,9 @@
 
 class IntersectionTarget {
 public:
-    IntersectionTarget(const Intersection & intersection, const Object & target);
+    IntersectionTarget(const Intersection & intersection, const Object & target)
+            : intersection_(intersection),
+              target_(std::ref(target)) {}
 
     IntersectionTarget(const IntersectionTarget & other) = default;
 
@@ -23,9 +25,5 @@ private:
     Intersection intersection_;
     std::reference_wrapper<const Object> target_;
 };
-
-IntersectionTarget::IntersectionTarget(const Intersection & intersection, const Object & target)
-        : intersection_(intersection),
-          target_(std::ref(target)) {}
 
 #endif //RAY_TRACING_INTERSECTION_TARGET_H

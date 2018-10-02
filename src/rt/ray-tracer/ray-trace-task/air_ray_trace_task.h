@@ -12,11 +12,11 @@ public:
                     const Color & color_intensity,
                     unsigned int max_recursion_depth);
 
+    AirRayTraceTask(const AirRayTraceTask & parent, const Ray & ray, const Color & color_intensity);
+
     void operator()(RayTracer & ray_tracer) override;
 
 private:
-    AirRayTraceTask(const AirRayTraceTask & parent, const Ray & ray, const Color & color_intensity);
-
     void emit_shadow_rays(const Intersection & intersection,
                           const BRDFunction & surface_brdf,
                           RayTracer & ray_tracer);

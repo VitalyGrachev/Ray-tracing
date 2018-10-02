@@ -14,7 +14,7 @@ FrameRenderer::FrameRenderer(const std::shared_ptr<const Scene> & scene, FrameBu
         : frame_buffer_(std::move(frame_buffer)),
           scene_(scene),
           eye_ray_generator_(frame_buffer_, scene_->get_camera()),
-          finished_fragment_counter_(frame_buffer.size().rows * frame_buffer.size().cols, [&]() {
+          finished_fragment_counter_(frame_buffer_.size().rows * frame_buffer_.size().cols, [&]() {
               frame_promise_.set_value(std::move(frame_buffer_));
 
               std::lock_guard lock(mutex_);
@@ -59,7 +59,7 @@ FrameRenderer::Task FrameRenderer::generate_eye_ray_task() {
     if (!eye_ray) { return nullptr; }
 
     return eye_ray_trace_task_factory_.create(eye_ray->ray,
-                                              std::make_shared<FragmentRenderTask>(*this, eye_ray->acceptor_fragment));
+                                              std::make_shared<FragmentRenderTask>(finished_fragment_counter_, eye_ray->acceptor_fragment));
 }
 
 void FrameRenderer::trace_ray(std::unique_ptr<RayTraceTask> && ray) {
@@ -71,4 +71,5 @@ void FrameRenderer::trace_ray(std::unique_ptr<RayTraceTask> && ray) {
     } else {
         air_ray_tasks_.emplace(std::move(ray));
     }
+    cond_.notify_one();
 }

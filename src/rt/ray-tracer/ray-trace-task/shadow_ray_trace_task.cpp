@@ -1,3 +1,4 @@
+#include <iostream>
 #include "shadow_ray_trace_task.h"
 
 namespace {
@@ -12,9 +13,9 @@ ShadowRayTraceTask::ShadowRayTraceTask(const BaseRayTraceTask & parent,
           illuminance_(illuminance.illuminane()),
           distance_to_source_(illuminance.distance_to_source()) {}
 
-void ShadowRayTraceTask::operator()() {
-    auto maybe_intersection = scene().find_intersection(ray(), distance_to_source_);
-    if (!maybe_intersection) { return; }
+void ShadowRayTraceTask::operator()(RayTracer & ray_tracer) {
+    auto intersection = scene().find_intersection(ray(), distance_to_source_);
+    if (intersection) { return; } // Some object shadows light source
 
     const Color color = pi * surface_brdf_(ray().direction()) * illuminance_;
     submit_color(color);

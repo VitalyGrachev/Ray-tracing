@@ -104,7 +104,7 @@ public:
     Vec3 transform_direction(const Vec3 & direction) const;
 
     /**
-     * Applies backward the transform to direction
+     * Applies backward transform to direction
      * @param direction direction to apply backward transform to
      * @return transformed direction
      */

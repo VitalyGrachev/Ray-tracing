@@ -1,4 +1,3 @@
-#include <iostream>
 #include "shadow_ray_trace_task.h"
 
 namespace {

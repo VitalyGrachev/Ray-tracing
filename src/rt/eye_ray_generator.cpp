@@ -20,12 +20,10 @@ std::optional<EyeRayGenerator::EyeRay> EyeRayGenerator::next_eye_ray() {
 }
 
 Ray EyeRayGenerator::fragment_ray(const Vec2 & angles) const {
-    const float cos_x = std::cos(angles.x());
-    const float cos_y = std::cos(angles.y());
-    const float sin_x = std::sin(angles.x());
-    const float sin_y = std::sin(angles.y());
+    const float tan_x = std::tan(angles.x());
+    const float tan_y = std::tan(angles.y());
     const Transform & tr = camera_.transform();
-    return Ray(tr.origin(), cos_y * cos_x * tr.forward() + cos_y * sin_x * tr.left() + sin_y * tr.up());
+    return Ray(tr.origin(), tr.forward() + tan_x * tr.left() + tan_y * tr.up());
 }
 
 Vec2 EyeRayGenerator::fragment_angles(FrameBuffer::Position fragment_pos) const {

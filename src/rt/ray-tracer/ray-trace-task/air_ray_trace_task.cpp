@@ -25,6 +25,9 @@ void AirRayTraceTask::operator()(RayTracer & ray_tracer) {
     if (!intersection_target) { return; }
 
     const Intersection & intersection = intersection_target->intersection();
+
+    if (Vec3::dotProduct(intersection.normal(), -ray().direction()) <= 0) { return; } // Looking from behind
+
     const Object & object = intersection_target->target();
     const BRDFunction surface_brdf = object.material().brdf_at(intersection.tex_coords());
 
@@ -57,6 +60,6 @@ void AirRayTraceTask::emit_refracted_ray(const Intersection & intersection,
     const Vec3 reflectance_dir = ray().direction() +
                                  2.0f * Vec3::dotProduct(ray().direction(), surface_normal) * surface_normal;
     const Ray reflected_ray(intersection.point() + bias * reflectance_dir, reflectance_dir);
-    const Color & incoming_intensity = surface_brdf(-ray().direction(), reflected_ray.direction(), surface_normal);
+    const Color incoming_intensity = surface_brdf(-ray().direction(), reflected_ray.direction(), surface_normal);
     ray_tracer.trace_ray(std::make_unique<AirRayTraceTask>(*this, reflected_ray, incoming_intensity));
 }

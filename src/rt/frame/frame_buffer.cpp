@@ -11,7 +11,7 @@ FrameBuffer::FrameBuffer(FrameBuffer && other) noexcept
 }
 
 FrameBuffer & FrameBuffer::operator=(FrameBuffer && other) noexcept {
-    if (this != &other) return *this;
+    if (this == &other) return *this;
 
     fragment_colors_ = std::move(other.fragment_colors_);
     size_ = other.size_;

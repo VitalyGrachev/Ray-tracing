@@ -5,7 +5,7 @@
 #include "shadow_ray_trace_task.h"
 
 namespace {
-constexpr float bias = 0.0000001f;
+constexpr float bias = 0.001f;
 }
 
 AirRayTraceTask::AirRayTraceTask(const std::shared_ptr<Fragment> & fragment,
@@ -26,7 +26,7 @@ void AirRayTraceTask::operator()(RayTracer & ray_tracer) {
 
     const Intersection & intersection = intersection_target->intersection();
 
-    if (Vec3::dotProduct(intersection.normal(), -ray().direction()) <= 0) { return; } // Looking from behind
+    if (dot(intersection.normal(), -ray().direction()) <= 0) { return; } // Looking from behind
 
     const Object & object = intersection_target->target();
     const BRDFunction surface_brdf = object.material().brdf_at(intersection.tex_coords());
@@ -43,7 +43,7 @@ void AirRayTraceTask::emit_shadow_rays(const Intersection & intersection,
                                        RayTracer & ray_tracer) {
     const Vec3 & surface_normal = intersection.normal();
     for (const auto & light_source : scene().enumerate_light_sources()) {
-        const Illuminance illuminance = light_source->illuminate_point(intersection.point());
+        const Illuminance illuminance = light_source->illuminate_point(intersection.point() + bias * surface_normal);
         ray_tracer.trace_ray(std::make_unique<ShadowRayTraceTask>(*this,
                                                                   illuminance,
                                                                   std::bind(surface_brdf,
@@ -58,8 +58,8 @@ void AirRayTraceTask::emit_refracted_ray(const Intersection & intersection,
                                          RayTracer & ray_tracer) {
     const Vec3 & surface_normal = intersection.normal();
     const Vec3 reflectance_dir = ray().direction() +
-                                 2.0f * Vec3::dotProduct(ray().direction(), surface_normal) * surface_normal;
-    const Ray reflected_ray(intersection.point() + bias * reflectance_dir, reflectance_dir);
+                                 2.0f * dot(-ray().direction(), surface_normal) * surface_normal;
+    const Ray reflected_ray(intersection.point() + bias * surface_normal, reflectance_dir);
     const Color incoming_intensity = surface_brdf(-ray().direction(), reflected_ray.direction(), surface_normal);
     ray_tracer.trace_ray(std::make_unique<AirRayTraceTask>(*this, reflected_ray, incoming_intensity));
 }

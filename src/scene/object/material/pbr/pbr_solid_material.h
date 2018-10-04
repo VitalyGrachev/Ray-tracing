@@ -3,12 +3,12 @@
 
 #include "pbr_material.h"
 
-class SolidMaterial final : public PBRMaterial {
+class PBRSolidMaterial final : public PBRMaterial {
 public:
-    SolidMaterial(const Color & diffuse_color, const Color & base_reflectivity, float roughness)
+    PBRSolidMaterial(const Color & diffuse_color, const Color & base_reflectivity, float roughness)
             : base_reflectivity_(base_reflectivity), diffuse_color_(diffuse_color), roughness_(roughness) {}
 
-    ~SolidMaterial() = default;
+    ~PBRSolidMaterial() = default;
 
 private:
     Color base_reflectivity_at(const Vec2 & uv) const override { return base_reflectivity_; }

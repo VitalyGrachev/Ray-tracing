@@ -10,11 +10,14 @@
 #include "../util/enumeration.h"
 
 class Scene final {
+    std::vector<Object> objects_;
+    std::vector<std::unique_ptr<LightSource>> light_sources_;
+    Camera camera_;
 public:
-    using ObjectsIterator = std::vector<Object>::iterator;
-    using ConstObjectsIterator = std::vector<Object>::const_iterator;
-    using LightSourcesIterator = std::vector<LightSource>::iterator;
-    using ConstLightSourcesIterator = std::vector<std::unique_ptr<LightSource>>::const_iterator;
+    using ObjectsIterator = decltype(objects_)::iterator;
+    using ConstObjectsIterator = decltype(objects_)::const_iterator;
+    using LightSourcesIterator = decltype(light_sources_)::iterator;
+    using ConstLightSourcesIterator = decltype(light_sources_)::const_iterator;
 
     /**
      * Creates empty scene and associates the given camera with it
@@ -82,11 +85,6 @@ public:
      * @param light source light source to add
      */
     void add_light_source(std::unique_ptr<LightSource> && light_source);
-
-private:
-    std::vector<Object> objects_;
-    std::vector<std::unique_ptr<LightSource>> light_sources_;
-    Camera camera_;
 };
 
 /**

@@ -29,7 +29,7 @@ public:
 private:
     Vec2 tex_coords(const Vec3 & point) const;
 
-    static const float radius_;
+    static const float sq_radius_;
 };
 
 #endif //RAY_TRACING_SPHERE_H

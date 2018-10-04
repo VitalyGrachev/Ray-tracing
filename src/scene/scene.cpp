@@ -1,5 +1,7 @@
 #include "scene.h"
 
+#include "../geometry/ray_transform.h"
+
 namespace {
 
 class ClosestTargetSeeker final {
@@ -27,29 +29,29 @@ private:
 };
 
 void ClosestTargetSeeker::consume_target(const Object & target) {
-    auto maybe_intersection = find_intersection_with(target.transform(), target.geometry());
-    if (maybe_intersection.has_value()) {
-        const float distance_to_target = ray_.origin().distanceToPoint(maybe_intersection->point());
-        if (distance_to_target < distance_to_closest_target_) {
-            distance_to_closest_target_ = distance_to_target;
-            closest_target_.emplace(*maybe_intersection, target);
-        }
-    }
+    auto intersection = find_intersection_with(target.transform(), target.geometry());
+    if (!intersection) { return; }
+
+    const float distance_to_target = ray_.origin().distanceToPoint(intersection->point());
+
+    if (distance_to_target >= distance_to_closest_target_) { return; }
+
+    distance_to_closest_target_ = distance_to_target;
+    closest_target_.emplace(*intersection, target);
 }
 
 std::optional<Intersection> ClosestTargetSeeker::find_intersection_with(const Transform & transform,
                                                                         const Geometry & geometry) const {
     // Transform ray into model coordinates since geometry defined in it.
-    Ray model_ray(transform.untransform_point(ray_.origin()),
-                  transform.untransform_direction(ray_.direction()));
-    auto maybe_intersection = geometry.find_intersection(model_ray);
+    Ray model_ray = untransform_ray(transform, ray_);
+    auto intersection = geometry.find_intersection(model_ray);
 
-    if (!maybe_intersection.has_value()) { return std::nullopt; }
+    if (!intersection) { return std::nullopt; }
 
-    // Transform resulting intersection_ into world coordinates
-    return std::make_optional<Intersection>(transform.transform_point(maybe_intersection->point()),
-                                            transform.transform_direction(maybe_intersection->normal()),
-                                            maybe_intersection->tex_coords());
+    // Transform resulting intersection into world coordinates
+    return std::make_optional<Intersection>(transform.transform_point(intersection->point()),
+                                            transform.transform_direction(intersection->normal()),
+                                            intersection->tex_coords());
 }
 
 }

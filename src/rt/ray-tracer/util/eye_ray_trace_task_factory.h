@@ -18,7 +18,7 @@ public:
 
 private:
     const Scene & scene_;
-    const Color & color_intensity_;
+    Color color_intensity_;
     unsigned int max_recursion_depth_;
 };
 

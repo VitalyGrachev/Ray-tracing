@@ -27,8 +27,6 @@ public:
     std::optional<Intersection> find_intersection(const Ray & ray) const override;
 
 private:
-    std::optional<Intersection> from_t(const Ray & ray, float t) const;
-
     Vec2 tex_coords(const Vec3 & point) const;
 
     static const float radius_;

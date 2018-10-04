@@ -5,37 +5,16 @@
 const float Sphere::radius_ = 1.0f;
 
 std::optional<Intersection> Sphere::find_intersection(const Ray & ray) const {
-    // (d * d)t^2 + 2(d * o)t + (o * o) - r^2 = 0
-    // a * t^2 + 2*b * t + c = 0
-    const float a = Vec3::dotProduct(ray.direction(), ray.direction());
-    const float b = Vec3::dotProduct(ray.direction(), ray.origin());
-    const float c = Vec3::dotProduct(ray.origin(), ray.origin()) - radius_ * radius_;
+    const Vec3 to_center = -ray.origin();
+    const float proj_len = dot(to_center, ray.direction());
+    if (proj_len <= 0.0f) { return std::nullopt; } // sphere is behind the ray origin
 
-    const float discriminant = b * b - a * c;
-    if (discriminant < 0) { return std::nullopt; } // No intersection
+    const Vec3 projection = proj_len * ray.direction();
+    const float sq_dist_from_center_to_ray = (ray.origin() + projection).lengthSquared();
+    if(sq_dist_from_center_to_ray > 1.0f) { return std::nullopt; } // no intersection
 
-    float t;
-    switch (std::fpclassify(discriminant)) {
-        case FP_ZERO:
-            t = -b / a;
-            break;
-        case FP_NORMAL:
-            t = (-b - std::sqrt(discriminant)) / a;
-            if (t < 0) { // Line intersects sphere behind ray origin
-                t = (-b + std::sqrt(discriminant)) / a;
-            }
-            break;
-        default:
-            return std::nullopt;
-    }
-    return from_t(ray, t);
-}
-
-std::optional<Intersection> Sphere::from_t(const Ray & ray, float t) const {
-    if (t < 0) { return std::nullopt; } // Line intersects sphere behind ray origin
-    const Vec3 point = ray.origin() + t * ray.direction();
-    const Vec3 normal = point.normalized();
-    return std::make_optional<Intersection>(point, normal, tex_coords(point));
+    const Vec3 point = ray.origin() + projection - std::sqrt(1.0f - sq_dist_from_center_to_ray) * ray.direction();
+    return std::make_optional<Intersection>(point, point.normalized(), tex_coords(point));
 }
 
 Vec2 Sphere::tex_coords(const Vec3 & point) const {

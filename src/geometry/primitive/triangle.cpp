@@ -1,5 +1,19 @@
-#include <cmath>
 #include "triangle.h"
+
+#include <cmath>
+
+namespace {
+
+/**
+ * Checks whether a and b have the same sign.
+ * Zero has same sign only with zero.
+ * @return true if signs on a and b are the same, false otherwise
+ */
+inline bool same_sign(float a, float b) {
+    return a * b > 0.0f;
+}
+
+}
 
 Triangle::Triangle(const Triangle::Vertices & points) {
     std::copy(points.begin(), points.end(), points_.begin());
@@ -12,37 +26,39 @@ Triangle::Triangle(const Vec3 & p1, const Vec3 & p2, const Vec3 & p3) {
 }
 
 std::optional<Intersection> Triangle::find_intersection(const Ray & ray) const {
-    const Vec3 normal = this->normal();
-    const float cos = QVector3D::dotProduct(normal, ray.direction());
+    const Vec3 n = normal();
+    const Vec3 & A = points_[0];
+    const Vec3 & B = points_[1];
+    const Vec3 & C = points_[2];
 
-    if (!std::isnormal(cos)) { return {}; } // Ray is parallel to triangle's plane
+    const float signed_dist_to_plane = dot(A - ray.origin(), n);
+    const float cos_n_dir = dot(ray.direction(), n);
+    if (!same_sign(cos_n_dir, signed_dist_to_plane)) { return std::nullopt; } // triangle is behind the ray origin
 
-    const Vec3 & A = this->vertices()[0];
-    const Vec3 & B = this->vertices()[1];
-    const Vec3 & C = this->vertices()[2];
-    const float ray_length = -QVector3D::dotProduct(normal, ray.origin() + A) / cos;
-
-    if (ray_length < 0) { return {}; }
-
-    const Vec3 P = ray.origin() + ray_length * ray.direction();
+    const Vec3 P = ray.origin() + (signed_dist_to_plane / cos_n_dir) * ray.direction();
 
     const Vec3 AB = B - A;
-    const Vec3 AC = C - A;
-    const Vec3 PA = P - A;
-    Vec3 barycentric = Vec3(AB.x(), AC.x(), PA.x()) * Vec3(AB.y(), AC.y(), PA.y());
-    barycentric /= barycentric.z();
-    barycentric.setZ(1.0f - barycentric.x() - barycentric.y());
+    const Vec3 BC = C - B;
+    const Vec3 CA = A - C;
+    const Vec3 AP = P - A;
+    const Vec3 BP = P - B;
+    const Vec3 CP = P - C;
 
-    if (barycentric.x() < 0.0f ||
-        barycentric.y() < 0.0f ||
-        barycentric.z() < 0.0f) { return {}; } // Intersection point is outside the triangle.
+    if (dot(cross(AB, AP), n) < 0.0f) { return std::nullopt; } // P is outside the triangle
 
-    return std::optional<Intersection>(std::in_place, P, normal, Vec2(0, 0));
+    if (dot(cross(BC, BP), n) < 0.0f) { return std::nullopt; } // P is outside the triangle
+
+    if (dot(cross(CA, CP), n) < 0.0f) { return std::nullopt; } // P is outside the triangle
+
+    return std::make_optional<Intersection>(P, n, Vec2(0, 0));
 }
 
 Vec3 Triangle::normal() const {
-    const Vertices & vertices = this->vertices();
-    const Vec3 AB = vertices[1] - vertices[0];
-    const Vec3 AC = vertices[2] - vertices[0];
-    return (AB * AC).normalized();
+    const Vertices & v = points_;
+    const Vec3 & A = v[0];
+    const Vec3 & B = v[1];
+    const Vec3 & C = v[2];
+    const Vec3 AB = B - A;
+    const Vec3 AC = C - A;
+    return cross(AB, AC).normalized();
 }

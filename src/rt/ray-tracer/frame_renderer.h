@@ -11,7 +11,7 @@
 #include "ray_tracer.h"
 #include "../frame/frame_buffer.h"
 #include "../../scene/scene.h"
-#include "../eye_ray_generator.h"
+#include "util/eye_ray_generator.h"
 #include "util/eye_ray_trace_task_factory.h"
 
 class FrameRenderer : public RayTracer {

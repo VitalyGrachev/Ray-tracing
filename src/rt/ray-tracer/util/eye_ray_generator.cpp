@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "../geometry/ray_transform.h"
+#include "../../../geometry/ray_transform.h"
 
 EyeRayGenerator::EyeRayGenerator(FrameBuffer & frame_buffer,
                                  const Camera & camera)

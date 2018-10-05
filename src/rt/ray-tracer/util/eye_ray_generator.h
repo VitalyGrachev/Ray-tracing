@@ -4,9 +4,9 @@
 #include <functional>
 #include <memory>
 
-#include "frame/frame_buffer.h"
-#include "../geometry/ray.h"
-#include "../scene/camera/camera.h"
+#include "../../frame/frame_buffer.h"
+#include "../../../geometry/ray.h"
+#include "../../../scene/camera/camera.h"
 
 class EyeRayGenerator final {
 public:

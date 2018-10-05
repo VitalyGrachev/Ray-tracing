@@ -34,7 +34,6 @@ add_executable(ray-tracing
         src/scene/object/material/pbr/pbr_solid_material.h
         src/rt/frame/fragment.h
         src/rt/frame/frame_buffer.cpp src/rt/frame/frame_buffer.h
-        src/rt/eye_ray_generator.cpp src/rt/eye_ray_generator.h
         src/rt/ray-tracer/ray_tracer.h
         src/rt/ray-tracer/ray-trace-task/ray_trace_task.h
         src/rt/ray-tracer/ray-trace-task/shadow_ray_trace_task.cpp src/rt/ray-tracer/ray-trace-task/shadow_ray_trace_task.h
@@ -42,6 +41,7 @@ add_executable(ray-tracing
         src/rt/ray-tracer/ray-trace-task/base_ray_trace_task.h src/rt/ray-tracer/ray-trace-task/base_ray_trace_task.cpp
         src/rt/ray-tracer/render_worker.cpp src/rt/ray-tracer/render_worker.h
         src/rt/ray-tracer/frame_renderer.cpp src/rt/ray-tracer/frame_renderer.h
+        src/rt/ray-tracer/util/eye_ray_generator.cpp src/rt/ray-tracer/util/eye_ray_generator.h
         src/rt/ray-tracer/util/fragment_render_task.cpp src/rt/ray-tracer/util/fragment_render_task.h
         src/rt/ray-tracer/util/finished_fragment_counter.h src/rt/ray-tracer/util/eye_ray_trace_task_factory.cpp
         src/rt/ray-tracer/util/eye_ray_trace_task_factory.h

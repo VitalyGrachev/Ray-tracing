@@ -24,6 +24,13 @@ public:
 
     BRDFunction & operator=(BRDFunction && other) = default;
 
+    /**
+     * Returns amount of light reflected in view_direction by surface with given normal when lit by light from light_direction
+     * @param view_direction direction of interest
+     * @param light_direction direction opposite to direction of incident light
+     * @param normal_direction normal to surface
+     * @return amount of light reflected in view_direction
+     */
     Color operator()(const Vec3 & view_direction,
                      const Vec3 & light_direction,
                      const Vec3 & normal_direction) const {

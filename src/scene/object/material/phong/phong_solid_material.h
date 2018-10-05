@@ -3,8 +3,14 @@
 
 #include "phong_shading_material.h"
 
+/**
+ * PhongShadingMaterial, which has the same optical properties at every point of it's surface
+ */
 class PhongSolidMaterial : public PhongShadingMaterial {
 public:
+    /**
+     * Creates PhongSolidMaterial with given optical properties
+     */
     PhongSolidMaterial(const Color & diffuse_color, const Color & specular_color, float shininess)
             : diffuse_color_(diffuse_color),
               specular_color_(specular_color),

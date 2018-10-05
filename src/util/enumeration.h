@@ -3,6 +3,10 @@
 
 #include <iterator>
 
+/**
+ * Convenience class. Simplifies usage of ranges defined by iterators in range-based for
+ * @tparam Iterator iterator class
+ */
 template<class Iterator>
 class Enumeration {
 public:

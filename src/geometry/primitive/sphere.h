@@ -4,7 +4,7 @@
 #include "../geometry.h"
 
 /**
- * Represents spherical primitive
+ * Represents spherical geometric primitive
  */
 class Sphere : public Geometry {
 public:

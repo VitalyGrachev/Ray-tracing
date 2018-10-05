@@ -3,8 +3,17 @@
 
 #include "../material.h"
 
+/**
+ * Represents material with optical properties defined by Phong shading model
+ */
 class PhongShadingMaterial : public Material {
 public:
+
+    /**
+     * Returns bidirectional reflectance distribution function at given point
+     * @param uv point on surface
+     * @return bidirectional reflectance distribution function
+     */
     BRDFunction brdf_at(const Vec2 & uv) const override;
 
 protected:

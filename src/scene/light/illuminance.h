@@ -5,7 +5,7 @@
 #include "../../util/color.h"
 
 /**
- * Represent illuminance surface by some distant light source
+ * Represents illuminance, point on gets by some distant light source
  */
 class Illuminance {
 public:
@@ -17,10 +17,19 @@ public:
 
     Illuminance & operator=(const Illuminance & other) = default;
 
+    /**
+     * @return ray, originated at point of interest directed to light source
+     */
     const Ray & ray_to_light_source() const { return direction_to_source_; }
 
+    /**
+     * @return distance from point on surface to light source
+     */
     float distance_to_source() const { return distance_to_source_; }
 
+    /**
+     * @return amount of light travelling from light source, which reaches point of interest
+     */
     const Color & illuminane() const { return illuminance_; }
 
 private:

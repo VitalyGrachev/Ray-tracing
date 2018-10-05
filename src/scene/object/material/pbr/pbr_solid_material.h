@@ -3,8 +3,14 @@
 
 #include "pbr_material.h"
 
+/**
+ * PBRMaterial, which has the same optical properties at every point of it's surface
+ */
 class PBRSolidMaterial final : public PBRMaterial {
 public:
+    /**
+     * Creates PBRSolidMaterial with given optical properties
+     */
     PBRSolidMaterial(const Color & diffuse_color, const Color & base_reflectivity, float roughness)
             : base_reflectivity_(base_reflectivity), diffuse_color_(diffuse_color), roughness_(roughness) {}
 

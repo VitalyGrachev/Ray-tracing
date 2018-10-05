@@ -8,8 +8,18 @@
  */
 class Color {
 public:
+    /**
+     * Creates color with given components
+     * @param vec color components
+     */
     explicit Color(const Vec3 & vec);
 
+    /**
+     * Creates color with given components
+     * @param red red component
+     * @param green green component
+     * @param blue blue component
+     */
     Color(float red, float green, float blue);
 
     Color(const Color & other) = default;

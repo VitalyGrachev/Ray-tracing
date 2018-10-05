@@ -25,6 +25,9 @@ public:
      */
     Transform & transform() { return transform_; }
 
+    /**
+     * @return transform, which represent placement of object in world coordinate system
+     */
     const Transform & transform() const { return transform_; }
 
     /**

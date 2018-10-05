@@ -24,6 +24,11 @@ public:
      */
     Transform & transform() { return transform_; }
 
+    /**
+     * Returns transform, which represent placement of camera in world coordinate system.
+     * Camera looks in forward direction.
+     * @return transform of the camera
+     */
     const Transform & transform() const { return transform_; }
 
     /**

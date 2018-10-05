@@ -9,6 +9,9 @@
 #include "intersection_target.h"
 #include "../util/enumeration.h"
 
+/**
+ * Represents graphical scene containing group of visible objects lit by group of light sources and associated camera
+ */
 class Scene final {
     std::vector<Object> objects_;
     std::vector<std::unique_ptr<LightSource>> light_sources_;

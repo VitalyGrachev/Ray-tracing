@@ -4,15 +4,29 @@
 #include <atomic>
 #include <functional>
 
+/**
+ * Counter of finished fragments to spot finish of rendering
+ */
 class FinishedFragmentCounter {
 public:
+    /**
+     * Creates finished fragment counter, invokes given callable when given number of fragments finish rendering
+     * @param pending_fragments fragments count to finish rendering
+     * @param on_all_finished callback to invoke when rendering finished
+     */
     template<class F>
     FinishedFragmentCounter(unsigned pending_fragments, F && on_all_finished);
 
     virtual ~FinishedFragmentCounter() = default;
 
+    /**
+     * @return true if render is finished, false otherwise
+     */
     bool is_render_finished() const;
 
+    /**
+     * Receives the report, that fragment is finished
+     */
     void fragment_finished();
 
 private:
